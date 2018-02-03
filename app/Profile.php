@@ -12,5 +12,10 @@ class Profile extends Model
     	return $this->belongsTo('App\User');
     }
 
+    public function getFeaturedAttribute($featured)
+    {
+        return asset($featured);
+    }
+
     protected $fillable = ['avatar', 'user_id', 'youtube', 'facebook', 'about'];
 }

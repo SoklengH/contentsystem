@@ -51,7 +51,7 @@ class CategoryTypeController extends Controller
 
         Session::flash('success', 'Type created successfully');
 
-        return redirect()->back();
+        return redirect()->route('type');
     }
 
     /**

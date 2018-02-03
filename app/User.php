@@ -32,6 +32,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getFeaturedAttribute($featured)
+    {
+        return asset($featured);
+    }
+
     public function profile()
     {
         return $this->hasOne('App\Profile');

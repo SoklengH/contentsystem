@@ -2,13 +2,13 @@
 
 @section('content')
 
-	<div class="stunning-header stunning-header-bg-lightviolet">
-		<div class="stunning-header-content">
-			<h1 class="stunning-header-title">{{ $post->title }}</h1>
-		</div>
-	</div>
+<div class="stunning-header stunning-header-bg-lightviolet">
+<div class="stunning-header-content">
+<h1 class="stunning-header-title">{{ $post->title }}</h1>
+</div>
+</div>
 
-	<div class="container">
+<div class="container">
     <div class="row medium-padding120">
         <main class="main">
             <div class="col-lg-10 col-lg-offset-1">
@@ -37,7 +37,7 @@
                                 <i class="seoicon-clock"></i>
 
                                 <time class="published" datetime="2016-03-20 12:00:00">
-                                	{{ $post->created_at->toFormattedDateString() }}
+                                {{ $post->created_at->toFormattedDateString() }}
                                 </time>
 
                             </span>
@@ -52,14 +52,14 @@
                         <div class="post__content-info">
 
 
-                        	 {!! $post->content !!}
+                        {!! $post->content !!}
                             
 
                             <div class="widget w-tags">
                                 <div class="tags-wrap">
                                     @foreach($post->tags as $tag)
 
-                                    	<a href="#" class="w-tags-item">{{ $tag->tag }}</a>
+                                    <a href="#" class="w-tags-item">{{ $tag->tag }}</a>
 
                                     @endforeach
                                 </div>

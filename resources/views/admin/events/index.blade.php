@@ -30,6 +30,9 @@
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
 {{--     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> --}}
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
     
 </head>
 <body>
@@ -86,11 +89,11 @@
     <div class="container" style="width: 100%" style="position: relative;">
             <div class="row" id="main-content">
                 <div class="pro-button table-responsive" id="myDIV">
-                    <button type="button" class="btn btn-success set-botton""><a href="{{ route('posts') }}">All Products</a></button>
-                    <button type="button" class="btn btn-success set-botton" "><a href="{{ route('categories') }}">Categories</a></button>
-                    <button type="button" class="btn active btn-success set-botton""><a href="{{ route('events') }}">Event</button>
-                    <button type="button" class="btn btn-success set-botton""><a href="{{ route('suppliers') }}">Suppliers</button>
-                    <button type="button" class="btn btn-success set-botton""><a href="{{ route('type') }}">Categories Type</button>
+                    <a href="{{ route('posts') }}"><button type="button" class="btn btn-success set-botton">Product</button></a>
+                    <a href="{{ route('categories') }}"><button type="button" class="btn  btn-success set-botton" ">Categories</button></a>
+                    <a href="{{ route('events') }}"><button type="button" class="btn btn-success set-botton active">Event</button></a>
+                    <a href="{{ route('suppliers') }}"><button type="button" class="btn btn-success set-botton">Suppliers</button></a>
+                    <a href="{{ route('type') }}"><button type="button" class="btn btn-success set-botton">Categories Type</button></a>
                 </div>
 
                 <hr style="margin-top: 110px;">

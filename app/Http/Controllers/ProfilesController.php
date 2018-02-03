@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use User;
 use Auth;
 use Session;
+use App\Profile;
 
 class ProfilesController extends Controller
 {
@@ -82,27 +83,27 @@ class ProfilesController extends Controller
         ]);
 
         $user = Auth::user();
-
+        $profile = Profile::where(
+            'user_id', '=', $user->id
+        )->first();
         if($request->hasFile('avatar'))
         {
             $avatar = $request->avatar;
             $avatar_new_name = time().$avatar->getClientOriginalName();
 
             $avatar->move('uploads/avatars', $avatar_new_name);
-
-            $user->profile->avatar = 'uploads/avatars/'.$avatar_new_name;
-
-            $user->profile->save();
+            // dd($user->profile);
+            $profile->avatar = 'uploads/avatars/'.$avatar_new_name;   
+            
         }
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->profile->facebook = $request->facebook;
-        $user->profile->youtube  = $request->youtube;
+        $profile->facebook = $request->facebook;
+        $profile->youtube  = $request->youtube;
+        $profile->about = $request->about;
 
-
-        
-      
+        $profile->save();    
 
         if($request->has('passsword'))
         {
@@ -110,12 +111,10 @@ class ProfilesController extends Controller
         }
 
         $user->save();
-        $user->profile->save();
-        
 
         Session::flash('success', 'Your account updated');
 
-        return redirect()->back();
+        return redirect()->route('users');
 
     }
 

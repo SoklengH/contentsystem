@@ -11,10 +11,10 @@ use Session;
 class UsersController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('admin');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('admin');
+    // }
     
     public function index()
     {
@@ -41,10 +41,9 @@ class UsersController extends Controller
                 'password' => bcrypt('password')
             ]);
 
-        $profile = Profile::create([
-            'user_id' => $user->id,
-            'avatar'  => 'uploads/avatars/1514906326cool-wallpaper-3.jpg'
-        ]);
+        $user->profile->save(new Profile([
+            'avatar' => 'uploads/avatars/1514906326cool-wallpaper-3.jpg'
+        ]));
 
 
         Session::flash('success', 'User added!!');
@@ -75,7 +74,7 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        $user->profile->delete();
+        // $user->profile->delete();
         $user->delete();    
 
         Session::flash('success', 'User deleted!');

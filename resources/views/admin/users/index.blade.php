@@ -30,6 +30,8 @@
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
 {{--     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> --}}
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
 </head>
 <body>
@@ -95,12 +97,12 @@
 						    		<th>
 						    			Name
 						    		</th>
-						    		{{-- <th>
+						    		<th>
 						    			Permission
-						    		</th> --}}
-						    		{{-- <th>
+						    		</th>
+						    		<th>
 						    			Delete
-						    		</th> --}}
+						    		</th>
 						    	</thead>
 						    	<tbody>
 						    		@foreach($users as $user)
@@ -113,20 +115,20 @@
 						    		 		<td>
 						    		 			{{ $user->name }}
 						    		 		</td>
-						    		 		{{-- <td>
+						    		 		<td>
 						    		 			@if($user->admin)
-						    		 				<a class="btn btn-xs btn-danger" href="{{ route('user.not.admin', ['id'=>$user->id]) }}">Remove Permission</a>
+						    		 				<a class="btn btn-xs btn-danger disabled" href="{{ route('user.not.admin', ['id'=>$user->id]) }}">Admin</a>
 						    		 			@else
 						    		 				<a class="btn btn-xs btn-success" href="{{ route('user.admin', ['id'=>$user->id]) }}">Make Admin</a>
 						    		 			@endif
-						    		 		</td> --}}
-						    		 		{{-- <td>
-						    		 			
-						    		 				<a class="btn btn-xs btn-danger" href="{{ route('user.delete', ['id'=>$user->id]) }}">
-                                                        <span class="glypyicon glyphicon-trash"></span>
-                                                    Delete</a>
-						    		 		
-						    		 		</td> --}}
+						    		 		</td>
+						    		 		<td>
+                                                @if($user->admin)
+						    		 				<a class="btn btn-xs btn-danger disabled" href="{{ route('user.delete', ['id'=>$user->id]) }}">Delete</a>
+                                                @else
+                                                    <a class="btn btn-xs btn-danger " href="{{ route('user.delete', ['id'=>$user->id]) }}">Delete</a>
+                                                @endif
+						    		 		</td>
 						    		 	</tr>
 
 						    		@endforeach

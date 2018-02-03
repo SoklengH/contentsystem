@@ -5,10 +5,17 @@ Route::get('/test', function(){
     // return App\Post::find(5)->category;
 });     
 
-Route::get('/', [
-       'uses' =>'FrontEndController@index',
-       'as'   =>'index'
-]); 
+//Route::get('/', [
+//       'uses' =>'FrontEndController@index',
+//       'as'   =>'index'
+//]);
+
+Route::get('/home', 'HomeController@index')->name('home');
+//we can use as buttom for routing to home page
+// Route::get('/home', function(){
+// 	'uses'=>'HomeController@index',
+// 	'as' => 'home'
+// });
 
 Route::get('/post/{slug}', [
        'uses' => 'FrontEndController@singlePost',
@@ -28,17 +35,51 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
     // 	'as' => 'home'
     // });
 
+    Route::get('/posts', [
+        'uses' => 'PostsController@index',
+        'as'   => 'posts'
+    ]);
+
     Route::get('/post/create', [
 		 'uses'=>'PostsController@create',
 		//call thing method
 		 'as'  =>'post.create'
 	]);
 
-
 	Route::post('/post/store', [
 		 'uses'=>'PostsController@store',
 		//call thing method
 		 'as'   =>'post.store'
+    ]);
+
+    Route::get('/post/delete/{id}', [
+        'uses' => 'PostsController@destroy',
+        'as'   => 'post.delete'
+    ]);
+
+    Route::get('/posts/trashed', [
+        'uses' => 'PostsController@trashed',
+        'as'   => 'posts.trashed'
+    ]);
+
+    Route::get('/posts/permanent/{id}', [
+        'uses' => 'PostsController@permanent',
+        'as'   => 'post.permanent'
+    ]);
+
+    Route::get('/posts/restore/{id}', [
+        'uses' => 'PostsController@restore',
+        'as'   => 'post.restore'
+    ]);
+
+    Route::get('/posts/edit/{id}', [
+        'uses' => 'PostsController@edit',
+        'as'   => 'post.edit'
+    ])->middleware('admin');
+
+    Route::post('/post/update/{id}', [
+        'uses' => 'PostsController@update',
+        'as'   => 'post.update'
     ]);
 
     Route::get('/category/create', [
@@ -69,41 +110,6 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
     Route::post('/category/update/{id}', [
         'uses' => 'CategoriesController@update',
         'as'   => 'category.update'
-    ]);
-
-    Route::get('/posts', [
-        'uses' => 'PostsController@index',
-        'as'   => 'posts'
-    ]);
-
-    Route::get('/post/delete/{id}', [
-        'uses' => 'PostsController@destroy',
-        'as'   => 'post.delete'
-    ]);
-
-    Route::get('/posts/trashed', [
-        'uses' => 'PostsController@trashed',
-        'as'   => 'posts.trashed'
-    ]);
-
-    Route::get('/posts/permanent/{id}', [
-        'uses' => 'PostsController@permanent',
-        'as'   => 'post.permanent'
-    ]);
-
-    Route::get('/posts/restore/{id}', [
-        'uses' => 'PostsController@restore',
-        'as'   => 'post.restore'
-    ]);
-
-    Route::get('/posts/edit/{id}', [
-        'uses' => 'PostsController@edit',
-        'as'   => 'post.edit'
-    ]);
-
-    Route::post('/post/update/{id}', [
-        'uses' => 'PostsController@update',
-        'as'   => 'post.update'
     ]);
 
     Route::get('/tags', [
@@ -151,16 +157,6 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
         'as'   => 'user.store'
     ]);
 
-    Route::get('user/admin/{id}', [
-        'uses' => 'UsersController@admin',
-        'as'   => 'user.admin'
-    ]);
-
-    Route::get('user/not-admin/{id}', [
-        'uses' => 'UsersController@not_admin',
-        'as'   => 'user.not.admin'
-    ]);
-
     Route::get('user/profile', [
         'uses' => 'ProfilesController@index',
         'as'   => 'user.profile'
@@ -174,7 +170,17 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
     Route::get('user/delete/{id}', [
         'uses' => 'UsersController@destroy',
         'as'   => 'user.delete'
-    ]);
+    ])->middleware('admin');
+
+    Route::get('user/admin/{id}', [
+        'uses' => 'UsersController@admin',
+        'as'   => 'user.admin'
+    ])->middleware('admin');
+
+    Route::get('user/not-admin/{id}', [
+        'uses' => 'UsersController@not_admin',
+        'as'   => 'user.not.admin'
+    ])->middleware('admin');
 
     Route::get('/settings',[
         'uses' => 'SettingsController@index',
@@ -274,4 +280,6 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
         'uses' => 'SuppliersController@update',
         'as'   => 'supplier.update'
     ]);
-}); 
+ }); 
+
+

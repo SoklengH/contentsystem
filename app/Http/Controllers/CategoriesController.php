@@ -10,6 +10,11 @@ use Session;
 
 class CategoriesController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +25,7 @@ class CategoriesController extends Controller
         //pass some data, uses Category model to get all the record
         
         return view('admin.categories.index')->with('categories', Category::all())
-                                             ->with('categorytypes', CategoryType::first());
+                                             ->with('categorytypes', CategoryType::all());
 
     }
 
