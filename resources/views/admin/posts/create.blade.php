@@ -82,12 +82,12 @@
                                                 </div>
                                                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                                     <label for="price">Item Price</label>
-                                                    <input type="text" name="price" class="form-control" required autofocus>
+                                                    <input type="number" name="price" class="form-control" required autofocus>
                                                 </div>
 
                                                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                                     <label for="content">Description:</label>
-                                                    <textarea name="content" id="content" cols="5" rows="5" class="form-control" required autofocus></textarea>
+                                                    <textarea name="content"  cols="5" rows="5" class="form-control" required autofocus></textarea>
                                                 </div>
 
                                                 <div class="form-group">
