@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
     <div class="panel panel-default">
     	<div class="panel-body">
 			    <table class="table table-hover">
@@ -17,7 +16,6 @@
 			    	</thead>
 			    	<tbody>
 			    		@foreach($tags as $tag)
-
 			    		 	<tr>
 			    		 		<td>
 			    		 			{{ $tag->tag }}
@@ -36,11 +34,9 @@
 			    		 			</a>
 			    		 		</td>
 			    		 	</tr>
-
 			    		@endforeach
 			    	</tbody>
 			    </table>
     	</div>
     </div>
-
 @stop

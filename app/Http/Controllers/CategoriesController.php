@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;   
 use App\CategoryType;
+use App\User;
 use Session;
 
 
 class CategoriesController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('admin');
-    }
+        // public function __construct()
+        // {
+        //     $this->middleware('admin');
+        // }
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +24,10 @@ class CategoriesController extends Controller
     public function index()
     {
         //pass some data, uses Category model to get all the record
+        $categories = Category::with('categorytype')->get();
         
-        return view('admin.categories.index')->with('categories', Category::all())
-                                             ->with('categorytypes', CategoryType::all());
+        return view('admin.categories.index')->with('categories', $categories)
+                                             ->with('users', User::all());
 
     }
 

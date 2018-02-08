@@ -1,30 +1,19 @@
 @extends('layouts.app')
-
-
 @section('content')
 
-
 	@if(count($errors) > 0)
-
-		<ul class="list-group">
-			@foreach($errors->all() as $error)
-
-			<li class="list-group-item text-danger">
-				{{ $errors }}
-			</li>
-
+	    <ul class="list-group">
+		    @foreach($errors->all() as $error)
+			    <li class="list-group-item text-danger">
+				{{ $errors }}</li>
 			@endforeach
 		</ul>
-
 	@endif
 
-
-
 	<div class="panel panel-default">
-		<div class="panel-heading">
-			Edit Blog Settings	
-		</div>
-		<div class="panel-body">
+		<div class="panel-heading">Edit Blog Settings</div>
+
+	    <div class="panel-body">
 			<form action="{{ route('settings.update') }}" method="post"	>
 				{!! csrf_field() !!}
 
@@ -52,10 +41,8 @@
 					</button>
 					</div>
 				</div>
-
 			</form>
 		</div>
 	</div>
-
 @stop
 	

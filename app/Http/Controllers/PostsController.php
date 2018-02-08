@@ -24,18 +24,13 @@ class PostsController extends Controller
 
         $categories = Category::all();
 
-        $tags  = Tag::all();
+        if($categories->count() == 0)
+        {
+            Session::flash('info', 'You must have some categories!');
+            return redirect()->back();
+        }
 
-        // if($categories->count() == 0)
-        // {
-        //     Session::flash('info', 'You must have some categories!');
-
-        //     return redirect()->back();
-        // }
-
-
-        return view('admin.posts.create')->with('categories', $categories)
-                                         ->with('tags', $tags);
+        return view('admin.posts.create')->with('categories', $categories);
 
     }
 
@@ -48,7 +43,8 @@ class PostsController extends Controller
             'title' =>'required|max:255',
             'featured'=>'required|image',
             'content'=>'required',
-            'price'=>'required',
+            'price'=>'required|numeric',
+
             'category_id' => 'required',
             // 'tags' => 'required'
         ]);

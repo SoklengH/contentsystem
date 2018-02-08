@@ -114,7 +114,7 @@ class ProfilesController extends Controller
 
         Session::flash('success', 'Your account updated');
 
-        return redirect()->route('users');
+        return redirect()->route('posts');
 
     }
 

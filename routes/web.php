@@ -1,39 +1,18 @@
 <?php
 
-Route::get('/test', function(){
-        return App\Profile::find(1)->user;
-    // return App\Post::find(5)->category;
-});     
-
-//Route::get('/', [
-//       'uses' =>'FrontEndController@index',
-//       'as'   =>'index'
-//]);
+Route::get('/', function () {
+    return view('index');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
-//we can use as buttom for routing to home page
-// Route::get('/home', function(){
-// 	'uses'=>'HomeController@index',
-// 	'as' => 'home'
-// });
-
-Route::get('/post/{slug}', [
-       'uses' => 'FrontEndController@singlePost',
-       'as'   => 'post.single'
-]);
 
 Auth::routes();
-
 
 Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
 {
 
     Route::get('/home', 'HomeController@index')->name('home');
-    //we can use as buttom for routing to home page
-    // Route::get('/home', function(){
-    // 	'uses'=>'HomeController@index',
-    // 	'as' => 'home'
-    // });
+
 
     Route::get('/posts', [
         'uses' => 'PostsController@index',
@@ -44,7 +23,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
 		 'uses'=>'PostsController@create',
 		//call thing method
 		 'as'  =>'post.create'
-	]);
+	])->middleware('admin');
 
 	Route::post('/post/store', [
 		 'uses'=>'PostsController@store',
@@ -55,17 +34,17 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
     Route::get('/post/delete/{id}', [
         'uses' => 'PostsController@destroy',
         'as'   => 'post.delete'
-    ]);
+    ])->middleware('admin');
 
     Route::get('/posts/trashed', [
         'uses' => 'PostsController@trashed',
         'as'   => 'posts.trashed'
-    ]);
+    ])->middleware('admin');
 
     Route::get('/posts/permanent/{id}', [
         'uses' => 'PostsController@permanent',
         'as'   => 'post.permanent'
-    ]);
+    ])->middleware('admin');
 
     Route::get('/posts/restore/{id}', [
         'uses' => 'PostsController@restore',
@@ -85,7 +64,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
     Route::get('/category/create', [
         'uses' => 'CategoriesController@create',
         'as'   => 'category.create'
-    ]);
+    ])->middleware('admin');
 
     Route::get('/categories', [
         'uses' => 'CategoriesController@index',
@@ -100,17 +79,17 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
     Route::get('/category/edit/{id}', [
         'uses' => 'CategoriesController@edit',
         'as'   => 'category.edit'
-    ]);
+    ])->middleware('admin');
 
     Route::get('/category/delete/{id}', [
         'uses' => 'CategoriesController@destroy',
         'as'   => 'category.delete'
-    ]);
+    ])->middleware('admin');
 
     Route::post('/category/update/{id}', [
         'uses' => 'CategoriesController@update',
         'as'   => 'category.update'
-    ]);
+    ])->middleware('admin');
 
     Route::get('/tags', [
         'uses' => 'TagsController@index',
@@ -157,8 +136,13 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
         'as'   => 'user.store'
     ]);
 
-    Route::get('user/profile', [
+    Route::get('user/edit', [
         'uses' => 'ProfilesController@index',
+        'as'   => 'user.edit'
+    ]);
+
+    Route::get('user/profile', [
+        'uses' => 'UsersController@pro',
         'as'   => 'user.profile'
     ]);
 
@@ -199,7 +183,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
     Route::get('/category_type/edit/{id}', [
         'uses' => 'CategoryTypeController@edit',
         'as'   => 'type.edit'
-    ]);
+    ])->middleware('admin');
 
     Route::post('/category_type/update/{id}', [
         'uses' => 'CategoryTypeController@update',
@@ -209,22 +193,22 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
     Route::get('/category_type/delete/{id}', [
         'uses' => 'CategoryTypeController@destroy',
         'as'   => 'type.delete'
-    ]);
+    ])->middleware('admin');
 
     Route::get('/category_type/create', [
         'uses' => 'CategoryTypeController@create',
         'as'   => 'type.create'
-    ]);
+    ])->middleware('admin');
 
     Route::post('/category_type/store', [
         'uses' => 'CategoryTypeController@store',
         'as'   => 'type.store'
-    ]);
+    ])->middleware('admin');
 
     Route::get('/event/create', [
         'uses' => 'EventsController@create',
         'as'   => 'event.create'
-    ]);
+    ])->middleware('admin');
 
     Route::get('/events', [
         'uses' => 'EventsController@index',
@@ -239,22 +223,22 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
     Route::get('/event/edit/{id}', [
         'uses' => 'EventsController@edit',
         'as'   => 'event.edit'
-    ]);
+    ])->middleware('admin');
 
     Route::get('/event/delete/{id}', [
         'uses' => 'EventsController@destroy',
         'as'   => 'event.delete'
-    ]);
+    ])->middleware('admin');
 
     Route::post('/event/update/{id}', [
         'uses' => 'EventsController@update',
         'as'   => 'event.update'
-    ]);
+    ])->middleware('admin');
 
     Route::get('/supplier/create', [
         'uses' => 'SuppliersController@create',
         'as'   => 'supplier.create'
-    ]);
+    ])->middleware('admin');
 
     Route::get('/suppliers', [
         'uses' => 'SuppliersController@index',
@@ -264,22 +248,20 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function()
     Route::post('/supplier/store', [
         'uses' => 'SuppliersController@store',
         'as'   => 'supplier.store'
-    ]);
+    ])->middleware('admin');
 
     Route::get('/supplier/edit/{id}', [
         'uses' => 'SuppliersController@edit',
         'as'   => 'supplier.edit'
-    ]);
+    ])->middleware('admin');
 
     Route::get('/supplier/delete/{id}', [
         'uses' => 'SuppliersController@destroy',
         'as'   => 'supplier.delete'
-    ]);
+    ])->middleware('admin');
 
     Route::post('/supplier/update/{id}', [
         'uses' => 'SuppliersController@update',
         'as'   => 'supplier.update'
-    ]);
- }); 
-
-
+    ])->middleware('admin');
+ });

@@ -21,7 +21,11 @@ class UsersController extends Controller
         return view('admin.users.index')->with('users', User::all());
     }
 
-   
+    public function pro()
+    {
+        return view('admin.users.user')->with('users', User::all());
+    }
+
     public function create()
     {
         return view('admin.users.create');
@@ -48,7 +52,7 @@ class UsersController extends Controller
 
         Session::flash('success', 'User added!!');
 
-        return redirect()->route('users');  
+        return redirect()->route('posts');
 
 
     }

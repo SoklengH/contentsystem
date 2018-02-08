@@ -23,7 +23,7 @@ class Category extends Model
 
     public function categorytype()
     {
-        return $this->belongsTo('App\CategoryType');
+        return $this->belongsTo('App\CategoryType', 'category_type_id');
     }
     
 }

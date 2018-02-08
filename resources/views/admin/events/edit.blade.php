@@ -4,12 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Laravel') }}</title>
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
@@ -19,146 +16,104 @@
     <link href="{{ asset('assetAdmin/css/animate.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assetAdmin/plugins/perfect-scrollbar/perfect-scrollbar.min.css') }}" rel="stylesheet" type="text/css"/>
         <!-- CORE CSS FRAMEWORK - END -->
-
         <!-- CORE CSS TEMPLATE - START -->
     <link href="{{ asset('assetAdmin/css/style.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assetAdmin/css/responsive.css') }}" rel="stylesheet" type="text/css"/>
-
     @yield('styles')
-
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
-{{--     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> --}}
+    {{--     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> --}}
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
-    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 1px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
 </head>
 <body>
-         <div class="page-container row-fluid">
-            <!-- SIDEBAR - START -->
-            <div class="page-sidebar">
-                <!-- MAIN MENU Sibar - START -->
-                <div class="page-sidebar-wrapper" id="main-menu-wrapper"> 
-                       <!-- USER INFO - START -->
-                    <div class="profile-info row">
-                        <div class="profile-image col-md-4 col-sm-4 col-xs-4">
-                            <a href="#">
-                                <img src="images/user/xs/default.png" class='img-responsive img-circle'>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="collapse navbar-collapse" id="app-navbar-collapse">
-
-                        <!-- Right Side Of Navbar -->
-                        <ul class="nav navbar-nav navbar-left">
-                            <!-- Authentication Links -->
-                            @if (Auth::guest())
-                                <li><a href="{{ route('login') }}">Login</a></li>
-                                <li><a href="{{ route('register') }}">Register</a></li>
-                            @else
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                        {{ Auth::user()->name }} <span class="caret"></span>
-                                    </a>
-
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="{{ route('logout') }}"
-                                                onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
-                                                Logout
-                                            </a>
-
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                {{ csrf_field() }}
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
-                </div>
-           
-            </div>
-        
-         </div>
-
-    <div class="container" style="width: 100%" style="position: relative;">
-            <div class="row" id="main-content">
-                
+    <div class="page-container row-fluid">
+        <div class="container" style="width: 100%" style="position: relative;">
+            <div class="row" id="main-content" style="margin-right: 200px">
                 <div class="wrapper">
-    
                     <div class="content-body" style="width: 100%">
                         <div class="table-responsive ">
                             <table class="table">
-                              <div class="panel panel-default">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h1>Edit Event: {{ $event->name }}</h1></div>
 
-								<div class="panel-heading">
-									Edit Event: {{ $event->name }}
-								</div>
+                                    <div class="panel-body">
+                                        <form action="{{ route('event.update', ['id' => $event->id]) }}" method="post" enctype="multipart/form-data">
+                                            {!! csrf_field() !!}
 
-								<div class="panel-body">
-									<form action="{{ route('event.update', ['id' => $event->id]) }}" method="post" enctype="multipart/form-data">
-										{!! csrf_field() !!}
+                                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                                <label for="name">Name</label>
+                                                <input type="text" name="name" value="{{ $event->name }}" class="form-control" required autofocus>
+                                            </div>
 
-										<div class="form-group">
-											<label for="name">Name</label>
-										    <input type="text" name="name" value="{{ $event->name }}" class="form-control">
-										</div>
-										<div class="form-group">
-											<label for="featured">Image</label>
-											 <input type="file" name="featured" class="form-control">
-										</div>
-                                        <div class="form-group">
-                                            <label for="content">Description:</label>
-                                            <textarea name="content" id="content" cols="5" rows="5" class="form-control">{{ $event->description }}</textarea>
-                                        </div>	
-										<div class="form-group">
-											<div class="text-center">
-												<button class="btn btn-success" type="submit">
-												Update Event
-											</button>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
+                                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                                <label for="featured">Image</label>
+                                                <input type="file" name="featured" class="form-control" required autofocus>
+                                            </div>
 
+                                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                                <label for="content">Description:</label>
+                                                <textarea name="content" id="content" cols="5" rows="5" class="form-control" required autofocus>{{ $event->description }}</textarea>
+                                            </div>
 
-                           </table>
+                                            <div class="form-group">
+                                                <div class="text-center">
+                                                    <button class="btn btn-success" type="submit">Update Event</button>
+                                                    <a href="{{ route('events') }}"><button id="event" type="button" class="btn btn-success set-botton" style="height: 33px; width: 80px; margin-left: 20px">Back Nah</button></a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </table>
                         </div>
                     </div>
                 </div>
-           </div> 
-           
+            </div>
+        </div>
     </div>
 
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/toastr.min.js') }}"></script> 
-    <script src="{{ asset('assetAdmin/js/jquery-1.11.2.min.js') }}" type="text/javascript"></script> 
-        <script src="{{ asset('assetAdmin/js/jquery.easing.min.js') }}" type="text/javascript"></script> 
-        <script src="{{ asset('assetAdmin/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script> 
-        <script src="{{ asset('assetAdmin/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}" type="text/javascript"></script> 
-        <script src="{{ asset('assetAdmin/plugins/viewport/viewportchecker.js') }}" type="text/javascript"></script>  
-        <!-- CORE JS FRAMEWORK - END -->
-
-        <!-- CORE TEMPLATE JS - START -->
-        <script src="{{ asset('assetAdmin/js/scripts.js') }}" type="text/javascript"></script>
-    {{-- <script src="/js/toastr.min.js"></script> --}}
-    <script>
-        @if(Session::has('success'))
-            toastr.success("{{ Session::get('success') }}");
-        @endif
-
-        @if(Session::has('info'))
-            toastr.info("{{ Session::get('info') }}");
-        @endif
-    </script>
-    @yield('scripts')
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/toastr.min.js') }}"></script> 
+<script src="{{ asset('assetAdmin/js/jquery-1.11.2.min.js') }}" type="text/javascript"></script> 
+<script src="{{ asset('assetAdmin/js/jquery.easing.min.js') }}" type="text/javascript"></script> 
+<script src="{{ asset('assetAdmin/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script> 
+<script src="{{ asset('assetAdmin/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}" type="text/javascript"></script> 
+<script src="{{ asset('assetAdmin/plugins/viewport/viewportchecker.js') }}" type="text/javascript"></script>  
+<!-- CORE JS FRAMEWORK - END -->
+<!-- CORE TEMPLATE JS - START -->
+<script src="{{ asset('assetAdmin/js/scripts.js') }}" type="text/javascript"></script>
+{{-- <script src="/js/toastr.min.js"></script> --}}
+<script>
+    @if(Session::has('success'))
+        toastr.success("{{ Session::get('success') }}");
+    @endif
+    @if(Session::has('info'))
+        toastr.info("{{ Session::get('info') }}");
+    @endif
+</script>
+@yield('scripts')
 </body>
 </html>
